@@ -15,9 +15,9 @@ This is a full-stack group project
 
 **Formula:**
 
-- Persona + need + purpose
-- I [user], need to [do something] to [achieve something]
-- As a [persona], I [want to], [so that].
+1. Persona + need + purpose
+2. I [user], need to [do something] to [achieve something]
+3. As a [persona], I [want to], [so that].
 
 - _As a guest user, I want to Browse categories and clothes_
 - _As a guest user, I want to add one or multiple items to my cart_
