@@ -4,9 +4,20 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 import { MdShoppingBag } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      const query = e.target.value.trim();
+      if (query) {
+        navigate(`/search?query=${query}`);
+      }
+    }
+  };
+  const navigate = useNavigate(); 
 
   return (
     <nav
@@ -28,18 +39,18 @@ function Navbar() {
           padding: 0,
           justifyContent: "center",
           flexGrow: 1,
-          marginLeft: "18rem",
+          marginLeft: "10rem",
         }}
       >
-        <li style={{ margin: "0 15px" }}>
-          <a href="/">Men</a>
-        </li>
-        <li style={{ margin: "0 15px" }}>
-          <a href="/women">Women</a>
-        </li>
-        <li style={{ margin: "0 15px" }}>
-          <a href="/kids">Kids</a>
-        </li>
+        {["men", "women", "kids"].map((category) => (
+          <li
+            key={category}
+            style={{ cursor: "pointer", marginLeft: "5rem" }}
+            onClick={() => navigate(`/search?category=${category}`)}
+          >
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </li>
+        ))}
       </ul>
       <div style={{ display: "flex", alignItems: "center" }}>
         <div className="relative w-44" style={{ marginRight: "15px" }}>
@@ -47,9 +58,15 @@ function Navbar() {
             type="text"
             placeholder="Search..."
             className="border border-gray-300 rounded-lg pl-10 p-2 w-full"
+            style={{ paddingLeft: "40px" }}
+            onKeyDown={handleSearch}
           />
           <AiOutlineSearch className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
         </div>
+        <CiHeart aria-hidden="true" className="text-gray-600 w-8 h-8" style={{ marginRight: "15px" }} />
+        <MdShoppingBag aria-hidden="true" className="text-gray-600 w-8 h-8" style={{ marginRight: "15px" }} />
+        <VscAccount aria-hidden="true" className="text-gray-600 w-8 h-8" />
+
         <CiHeart className="w-7 h-7" style={{ marginRight: "15px" }} />
         <MdShoppingBag className="w-7 h-7" style={{ marginRight: "15px" }} />
         

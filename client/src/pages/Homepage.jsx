@@ -9,7 +9,6 @@ function Homepage() {
     return (
         <div>
             <Banner />
-            <Navbar />
             <div style={{ position: 'relative', textAlign: 'center' }}>
                 <img src={Hero} alt="Hero" style={{ width: '100%', height: 'auto', maxHeight: '675px' }} />
                 <div
