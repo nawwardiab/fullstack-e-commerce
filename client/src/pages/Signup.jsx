@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import dmlogo from "../assets/dmlogo.png";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -49,8 +50,13 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+      <div className=" p-8 rounded  w-full max-w-md  shadow-md">
+      <img
+    src={dmlogo} 
+    alt=""
+    className="w-16 "
+  />
+        <h2 className="text-xl font-bold mb-3 text-justify">Register</h2>
         {errorMsg && (
           <div className="mb-4 text-red-500 text-center">{errorMsg}</div>
         )}
@@ -58,60 +64,65 @@ const Signup = () => {
           <div className="mb-4 text-green-500 text-center">{successMsg}</div>
         )}
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+        <div className="mb-4">
+           
             <input
               type="text"
               id="fullName"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Enter your full name..."
-              className="mt-1 w-full p-2 border rounded"
+            className="mt-1 w-full p-2 border text-xs"
             />
           </div>
+         
           <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-700"></label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email..."
-              className="mt-1 w-full p-2 border rounded"
+              placeholder="Enter your email.."
+            className="mt-1 w-full p-2 border text-xs"
             />
           </div>
           <div className="mb-4">
+            <label htmlFor="password" className="block text-gray-700"></label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password..."
-              className="mt-1 w-full p-2 border rounded"
+              placeholder="Enter your password.."
+               className="mt-1 w-full p-2 border text-xs"
             />
           </div>
           <div className="mb-4">
+            <label htmlFor="password" className="block text-gray-700"></label>
             <input
               type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm your password..."
-              className="mt-1 w-full p-2 border rounded"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Confirm your password.."
+               className="mt-1 w-full p-2 border text-xs"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors"
+            className="w-full bg-black text-xs text-white p-2  hover:bg-gray-600 transition-colors mb-5"
           >
             Continue
           </button>
         </form>
-             <p className="mt-4 text-center">
-                  If you don't have an account.Please register{' '}
-                  <Link to="/signup" className="text-blue-500">
-                   here
-                  </Link>
-                </p>
-                When you create an account, you agree to our <Link>Terms of use</Link>. <br /> Learn how we handle your data in our <Link>Privacy notice</Link>.
+        <p className="text-xs text-justify mb-5 ">
+          When you create an account, you agree to our  
+          <Link to="./login " className="text-black underline hover:underline"> Terms of Use</Link>,
+          <br />
+          Learn how we handle your data in our  
+          <Link to="./login" className="text-black underline"> Privacy Notice</Link>.
+        </p>
       </div>
     </div>
   );
