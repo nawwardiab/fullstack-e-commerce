@@ -10,7 +10,7 @@ function Banner() {
       fontSize: "18px",  
       fontWeight: "bold",  
     }}>
-      🌼 Spring Sale! Enjoy a 30% discount on all items! 
+      🌼 Spring Sale! Enjoy a 30% discount on all products! 
     </div>
   );
 }
