@@ -4,7 +4,7 @@ import cors from "cors";
 import "dotenv/config";
 
 import connectDB from "./utils/database.js";
-import userRouter from "./routes/userRouter.js";
+import userRouter from "./routes/usersRouter.js";
 
 import {
   globalErrorHandler,
