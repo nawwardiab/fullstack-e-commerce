@@ -1,12 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 import { MdShoppingBag } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
 
-
-
 function Navbar() {
+  const navigate = useNavigate(); // Hook for navigation
+
   return (
     <nav
       style={{
@@ -49,12 +50,17 @@ function Navbar() {
           />
           <AiOutlineSearch className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
         </div>
-        <CiHeart className="w-7 h-7" style={{ marginRight: "15px"}} />
+        <CiHeart className="w-7 h-7" style={{ marginRight: "15px" }} />
         <MdShoppingBag className="w-7 h-7" style={{ marginRight: "15px" }} />
-        <VscAccount className="w-7 h-7" />
+        
+        {/* Navigate to Login Page when Clicking on VscAccount */}
+        <div onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
+          <VscAccount className="w-7 h-7" />
+        </div>
       </div>
     </nav>
-
   );
 }
+
 export default Navbar;
+
