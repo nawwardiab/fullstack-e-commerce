@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 import { MdShoppingBag } from "react-icons/md";
@@ -16,6 +17,7 @@ function Navbar() {
       }
     }
   };
+  const navigate = useNavigate(); 
 
   return (
     <nav
@@ -64,6 +66,14 @@ function Navbar() {
         <CiHeart aria-hidden="true" className="text-gray-600 w-8 h-8" style={{ marginRight: "15px" }} />
         <MdShoppingBag aria-hidden="true" className="text-gray-600 w-8 h-8" style={{ marginRight: "15px" }} />
         <VscAccount aria-hidden="true" className="text-gray-600 w-8 h-8" />
+
+        <CiHeart className="w-7 h-7" style={{ marginRight: "15px" }} />
+        <MdShoppingBag className="w-7 h-7" style={{ marginRight: "15px" }} />
+        
+        {/* Navigate to Login Page when Clicking on VscAccount */}
+        <div onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
+          <VscAccount className="w-7 h-7" />
+        </div>
       </div>
     </nav>
   );
