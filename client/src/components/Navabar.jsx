@@ -4,7 +4,6 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 import { MdShoppingBag } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
-import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -17,7 +16,6 @@ function Navbar() {
       }
     }
   };
-  const navigate = useNavigate(); 
 
   return (
     <nav
@@ -30,7 +28,14 @@ function Navbar() {
         borderBottom: "1px solid #ccc",
       }}
     >
-      <div style={{ fontSize: "24px", fontWeight: "bold" }}>DressMe</div>
+      {/* "DressMe" Logo (Now Clickable) */}
+      <div
+        style={{ fontSize: "24px", fontWeight: "bold", cursor: "pointer" }}
+        onClick={() => navigate("/")} // ✅ Redirects to homepage on click
+      >
+        DressMe
+      </div>
+
       <ul
         style={{
           display: "flex",
@@ -52,7 +57,9 @@ function Navbar() {
           </li>
         ))}
       </ul>
+
       <div style={{ display: "flex", alignItems: "center" }}>
+        {/* Search Input */}
         <div className="relative w-44" style={{ marginRight: "15px" }}>
           <input
             type="text"
@@ -63,21 +70,22 @@ function Navbar() {
           />
           <AiOutlineSearch className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
         </div>
-        <CiHeart aria-hidden="true" className="text-gray-600 w-8 h-8" style={{ marginRight: "15px" }} />
-        <MdShoppingBag aria-hidden="true" className="text-gray-600 w-8 h-8" style={{ marginRight: "15px" }} />
-        <VscAccount aria-hidden="true" className="text-gray-600 w-8 h-8" />
 
-        <CiHeart className="w-7 h-7" style={{ marginRight: "15px" }} />
-        <MdShoppingBag className="w-7 h-7" style={{ marginRight: "15px" }} />
-        
-        {/* Navigate to Login Page when Clicking on VscAccount */}
-        <div onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
-          <VscAccount className="w-7 h-7" />
-        </div>
+        {/* Wishlist Icon */}
+        <CiHeart aria-hidden="true" className="text-gray-600 w-8 h-8 cursor-pointer" style={{ marginRight: "15px" }} />
+
+        {/* Shopping Bag Icon */}
+        <MdShoppingBag aria-hidden="true" className="text-gray-600 w-8 h-8 cursor-pointer" style={{ marginRight: "15px" }} />
+
+        {/* Account Icon (Navigates to Login) */}
+        <VscAccount
+          aria-hidden="true"
+          className="text-gray-600 w-8 h-8 cursor-pointer"
+          onClick={() => navigate("/login")} // ✅ Navigates to login
+        />
       </div>
     </nav>
   );
 }
 
 export default Navbar;
-
