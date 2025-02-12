@@ -4,22 +4,27 @@ import createError from "http-errors";
 
 const checkToken = async (req, res, next) => {
   try {
-    const jwtToken = req.cookies.jwtToken;
+    const token = req.cookies.jwtToken;
+    
+    if (!token) {
+      throw createError(401, "No token provided");
+    }
 
-    if (!jwtToken) throw createError(401, "Unauthorized request");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      throw createError(401, "User not found");
+    }
 
-    const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET);
-
-    const user = await User.findById({ _id: decoded.id });
-
-    if (!user) throw createError(401, "User is no longer exist");
-
-    req.data = user;
-    req.isAuthenticated = true;
-
+    req.user = user;
     next();
   } catch (error) {
-    next(error);
+    if (error.name === 'JsonWebTokenError') {
+      next(createError(401, "Invalid token"));
+    } else {
+      next(error);
+    }
   }
 };
 
