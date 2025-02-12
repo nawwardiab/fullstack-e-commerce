@@ -2,9 +2,12 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-
 import connectDB from "./utils/database.js";
-import userRouter from "./routes/usersRouter.js";
+
+import usersRouter from "./routes/usersRouter.js";
+import productsRouter from "./routes/productsRouter.js";
+import cartsRouter from "./routes/cartsRouter.js";
+import ordersRouter from "./routes/ordersRouter.js";
 
 import {
   globalErrorHandler,
@@ -26,7 +29,10 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api', userRouter);
+app.use('/users', usersRouter);
+app.use("/products", productsRouter);
+app.use("/carts", cartsRouter);
+app.use("/orders", ordersRouter);
 
 app.use(routeNotFound);
 app.use(globalErrorHandler);
