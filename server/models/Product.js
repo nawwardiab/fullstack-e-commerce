@@ -6,15 +6,15 @@ const ProductSchema = new Schema({
         required: true, 
     },
 
-    image: { 
-        type: String, 
-        required: true
+    price: { 
+        type: Number, 
+        required: true,
     },
-
-    brandName: { 
-        type: String, 
-        required: true 
-    },
+    
+    // brandName: { 
+    //     type: String, 
+    //     required: true 
+    // },
 
     category: {
         type: String,
@@ -22,10 +22,12 @@ const ProductSchema = new Schema({
         required: true,
   },
 
-    price: { 
-        type: Number, 
-        required: true,
-    },
+    image: { 
+    type: String, 
+    required: true
+  },
+
+   
 
     size: {
         xs: { quantity: Number },
