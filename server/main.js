@@ -4,11 +4,13 @@ import cors from "cors";
 import "dotenv/config";
 
 import connectDB from "./utils/database.js";
+import userRouter from "./routes/usersRouter.js";
 
 import {
   globalErrorHandler,
   routeNotFound,
 } from "./middleware/errorHandlers.js";
+import user from "./models/User.js"
 
 await connectDB();
 const app = express();
@@ -24,7 +26,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-
+app.use('/api', userRouter);
 
 app.use(routeNotFound);
 app.use(globalErrorHandler);

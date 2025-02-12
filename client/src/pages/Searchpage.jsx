@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navabar";
 import Banner from "../components/Banner";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { MdShoppingBag } from "react-icons/md";
 import { AiFillHeart } from "react-icons/ai"; 
@@ -11,27 +11,29 @@ function SearchPage() {
     const queryParams = new URLSearchParams(location.search);
     const initialCategory = queryParams.get("category") || "all"; 
 
-    // State Variables
-    const [dresses, setDresses] = useState([]); // Stores all fetched products
-    const [filteredDresses, setFilteredDresses] = useState([]); // Shows results based on filters
+ 
+    const [dresses, setDresses] = useState([]); 
+    const [filteredDresses, setFilteredDresses] = useState([]); 
     const [category, setCategory] = useState(initialCategory);
     const [priceSort, setPriceSort] = useState("default");
     const [wishlist, setWishlist] = useState([]); 
 
-    // Fetch All Products 
+    
+
+    // Fetching All Products 
     useEffect(() => {
         const fetchDresses = async () => {
             try {
                 const response = await fetch("https://fakestoreapi.com/products");
                 const data = await response.json();
     
-                // ✅ Filter clothing items only
+                // Filtering clothing items only
                 const clothingItems = data.filter(item => 
                     item.category === "men's clothing" || item.category === "women's clothing"
                 );
     
-                setDresses(clothingItems); // ✅ Store only clothing
-                setFilteredDresses(clothingItems); // ✅ Show only clothing initially
+                setDresses(clothingItems); 
+                setFilteredDresses(clothingItems); 
     
                 console.log("Fetched Clothing Products:", clothingItems);
             } catch (error) {
@@ -43,13 +45,13 @@ function SearchPage() {
     }, []);
     
 
-    // Apply Filters Dynamically
+    
     useEffect(() => {
-        if (dresses.length === 0) return; // Prevent filtering before data is loaded
+        if (dresses.length === 0) return; 
 
-        let result = [...dresses]; // Start with all products
+        let result = [...dresses]; 
 
-        // Filter by Category (Only filter if not "all")
+     
         if (category !== "all") {
             result = result.filter(item => item.category === category);
         }
@@ -65,7 +67,7 @@ function SearchPage() {
 
         console.log("Filtered Result:", result);
         setFilteredDresses(result);
-    }, [category, priceSort]); // Only updates when filters change (not on initial load)
+    }, [category, priceSort]); 
 
     // Handle Dropdown Changes
     const handleCategoryChange = (e) => {
@@ -80,8 +82,8 @@ function SearchPage() {
     const toggleWishlist = (id) => {
         setWishlist((prevWishlist) =>
             prevWishlist.includes(id)
-                ? prevWishlist.filter((itemId) => itemId !== id) // Remove if already liked
-                : [...prevWishlist, id] // Add to wishlist
+                ? prevWishlist.filter((itemId) => itemId !== id) 
+                : [...prevWishlist, id] 
         );
     };
 
@@ -136,52 +138,53 @@ function SearchPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
                 {filteredDresses.length > 0 ? (
                     filteredDresses.map((dress) => (
-                        <div
-                            key={dress.id}
-                            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-[420px]"
-                        >
-                            {/* Image + Heart Icon */}
-                            <div className="relative group">
-                                <img
-                                    src={dress.image}
-                                    alt={dress.title}
-                                    className="w-full h-60 object-cover object-top rounded-lg shadow-md transition-transform duration-300 group-hover:scale-105"
+                        <Link to={`/product/${dress.id}`} key={dress.id}>
 
-                                />
+                            <div
+                                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-[420px]"
+                            >
+                                
+                                <div className="relative group">
+                                    <img
+                                        src={dress.image}
+                                        alt={dress.title}
+                                        className="w-full h-60 object-cover object-top rounded-lg shadow-md transition-transform duration-300 group-hover:scale-105"
+                                    />
 
-                                {/* Heart Icon (Top Right) */}
-                                <button
-                                    className="absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:bg-gray-100 transition"
-                                    onClick={() => toggleWishlist(dress.id)}
-                                >
-                                    {wishlist.includes(dress.id) ? (
-                                        <AiFillHeart className="w-6 h-6 text-red-500" /> // Filled heart
-                                    ) : (
-                                        <CiHeart className="w-6 h-6 text-gray-600" /> // Outline heart
-                                    )}
-                                </button>
-                            </div>
-
-                            <div className="p-4 flex flex-col justify-between bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 h-[420px]">
-                                {/* Card Product */}
-                                <div className="flex-grow flex flex-col justify-between">
-                                    <div className="flex justify-between items-center mb-2">
-                                        <h3 className="font-semibold text-lg text-gray-900">{truncateTitle(dress.title)}</h3>
-                                        <span className="font-bold text-lg text-orange-600">€{dress.price}</span>
-                                    </div>
-
-                                    <p className="text-sm text-gray-600 leading-relaxed truncate">{truncateDescription(dress.description, 5)}</p>
-                                </div>
-
-                                {/* Add to Cart Button */}
-                                <div className="mt-4">
-                                    <button className="w-full bg-orange-500 text-white py-3 rounded-xl shadow-md hover:bg-orange-600 hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2">
-                                        <MdShoppingBag className="w-6 h-6" />
-                                        <span className="text-md font-medium">Add to Cart</span>
+                                   
+                                    <button
+                                        className="absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:bg-gray-100 transition"
+                                        onClick={() => toggleWishlist(dress.id)}
+                                    >
+                                        {wishlist.includes(dress.id) ? (
+                                            <AiFillHeart className="w-6 h-6 text-red-500" /> 
+                                        ) : (
+                                            <CiHeart className="w-6 h-6 text-gray-600" /> 
+                                        )}
                                     </button>
                                 </div>
+
+                                <div className="p-4 flex flex-col justify-between bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 h-[420px]">
+                                    {/* Card Product */}
+                                    <div className="flex-grow flex flex-col justify-between">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <h3 className="font-semibold text-lg text-gray-900">{truncateTitle(dress.title)}</h3>
+                                            <span className="font-bold text-lg text-orange-600">€{dress.price}</span>
+                                        </div>
+
+                                        <p className="text-sm text-gray-600 leading-relaxed truncate">{truncateDescription(dress.description, 5)}</p>
+                                    </div>
+
+                                    {/* Add to Cart Button */}
+                                    <div className="mt-4">
+                                        <button className="w-full bg-orange-500 text-white py-3 rounded-xl shadow-md hover:bg-orange-600 hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2">
+                                            <MdShoppingBag className="w-6 h-6" />
+                                            <span className="text-md font-medium">Add to Cart</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))
                 ) : (
                     <p className="text-center text-gray-500">No products match your filters.</p>

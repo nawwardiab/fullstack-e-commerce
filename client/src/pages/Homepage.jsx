@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navabar"
 import Hero from "../assets/Hero.jpeg"
 import Banner from "../components/Banner";
 

@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 import { MdShoppingBag } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
+import { useCart } from "../context/CartContext"; 
+import CartDropdown from "./Cartdropdown"; 
 
 function Navbar() {
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const { cartItems, getCartCount } = useCart(); 
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
@@ -18,39 +22,18 @@ function Navbar() {
   };
 
   return (
-    <nav
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 20px",
-        backgroundColor: "#fff",
-        borderBottom: "1px solid #ccc",
-      }}
-    >
-      {/* "DressMe" Logo (Now Clickable) */}
-      <div
-        style={{ fontSize: "24px", fontWeight: "bold", cursor: "pointer" }}
-        onClick={() => navigate("/")} // ✅ Redirects to homepage on click
-      >
+    <nav className="flex justify-between items-center p-4 bg-white shadow-md relative">
+      {/* Logo */}
+      <div className="text-xl font-bold cursor-pointer" onClick={() => navigate("/")}>
         DressMe
       </div>
 
-      <ul
-        style={{
-          display: "flex",
-          listStyleType: "none",
-          margin: 0,
-          padding: 0,
-          justifyContent: "center",
-          flexGrow: 1,
-          marginLeft: "10rem",
-        }}
-      >
+      {/* Navigation Links */}
+      <ul className="flex justify-center flex-grow space-x-8 ml-55">
         {["men", "women", "kids"].map((category) => (
           <li
             key={category}
-            style={{ cursor: "pointer", marginLeft: "5rem" }}
+            className="cursor-pointer"
             onClick={() => navigate(`/search?category=${category}`)}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -58,31 +41,43 @@ function Navbar() {
         ))}
       </ul>
 
-      <div style={{ display: "flex", alignItems: "center" }}>
+      {/* Icons Section */}
+      <div className="flex items-center space-x-4">
         {/* Search Input */}
-        <div className="relative w-44" style={{ marginRight: "15px" }}>
+        <div className="relative w-44">
           <input
             type="text"
             placeholder="Search..."
             className="border border-gray-300 rounded-lg pl-10 p-2 w-full"
-            style={{ paddingLeft: "40px" }}
             onKeyDown={handleSearch}
           />
           <AiOutlineSearch className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
         </div>
 
         {/* Wishlist Icon */}
-        <CiHeart aria-hidden="true" className="text-gray-600 w-8 h-8 cursor-pointer" style={{ marginRight: "15px" }} />
+        <CiHeart className="text-gray-600 w-8 h-8 cursor-pointer" />
 
-        {/* Shopping Bag Icon */}
-        <MdShoppingBag aria-hidden="true" className="text-gray-600 w-8 h-8 cursor-pointer" style={{ marginRight: "15px" }} />
+        {/* Shopping Bag Icon + Cart Dropdown */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsDropdownVisible(true)}
+          onMouseLeave={() => setIsDropdownVisible(false)}
+        >
+          <div className="relative">
+            <MdShoppingBag className="text-gray-600 w-8 h-8 cursor-pointer" />
+            {/* Show cart count if items exist */}
+            {getCartCount() > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                {getCartCount()}
+              </span>
+            )}
+          </div>
 
-        {/* Account Icon (Navigates to Login) */}
-        <VscAccount
-          aria-hidden="true"
-          className="text-gray-600 w-8 h-8 cursor-pointer"
-          onClick={() => navigate("/login")} // ✅ Navigates to login
-        />
+          {isDropdownVisible && <CartDropdown cartItems={cartItems} isVisible={isDropdownVisible} />}
+        </div>
+
+        {/* Account Icon */}
+        <VscAccount className="text-gray-600 w-8 h-8 cursor-pointer" onClick={() => navigate("/login")} />
       </div>
     </nav>
   );
