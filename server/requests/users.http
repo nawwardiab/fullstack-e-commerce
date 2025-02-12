@@ -1,10 +1,32 @@
-
 ### Register User
-POST http://localhost:5001/api/register
+POST http://localhost:5001/users/register
 Content-Type: application/json
 
 {
     "fullName": "Johnny Doer",
-    "email": "john.doe3@example.com",
+    "email": "john.doe1@example.com",
     "password": "yourSecurePassword123"
 }
+
+### Login User
+POST http://localhost:5001/users/login
+Content-Type: application/json
+
+{
+    "email": "john.doe1@example.com",
+    "password": "yourSecurePassword123"
+}
+
+> {% 
+    if (response.body.token) {
+        client.global.set("auth_token", response.body.token);
+    }
+%}
+
+### Logout User
+POST http://localhost:5001/users/logout
+Content-Type: application/json
+Cookie: jwtToken={{auth_token}}
+
+
+###

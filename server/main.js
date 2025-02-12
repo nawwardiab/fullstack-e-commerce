@@ -4,7 +4,7 @@ import cors from "cors";
 import "dotenv/config";
 
 import connectDB from "./utils/database.js";
-import userRouter from "./routes/usersRouter.js";
+import usersRouter from "./routes/usersRouter.js";
 
 import {
   globalErrorHandler,
@@ -26,7 +26,10 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api', userRouter);
+app.use('/users', usersRouter);
+// 
+// app.use('carts', cartsRouter);
+// app.use('orders', orders);  // we dont have time for these 
 
 app.use(routeNotFound);
 app.use(globalErrorHandler);

@@ -1,0 +1,28 @@
+### Get Cart
+GET http://localhost:5001/carts/cartId123
+
+### Add to Cart
+POST http://localhost:5001/carts/cartId123/add
+Content-Type: application/json
+
+{
+    "productId": "productId123",
+    "quantity": 2
+}
+
+### Update Cart Item
+PATCH http://localhost:5001/carts/cartId123/update
+Content-Type: application/json
+
+{
+    "productId": "productId123",
+    "quantity": 3
+}
+
+### Remove from Cart
+DELETE http://localhost:5001/carts/cartId123/remove
+Content-Type: application/json
+
+{
+    "productId": "productId123"
+}
