@@ -1,17 +1,13 @@
 import express from "express";
-import {
-    getCart,
-    addToCart,
-    updateCartItem,
-    removeFromCart
-} from "../controllers/cartController.js";
+import { getCart, addToCart, updateQuantityInCart, removeCartItem } from "../controllers/cartController.js";
 
 const router = express.Router();
 
+
 router
-    .get('/:cartId', getCart)
-    .post('/:cartId/add', addToCart)
-    .patch('/:cartId/update', updateCartItem)
-    .delete('/:cartId/remove', removeFromCart);
+.get("/:cartId", getCart)
+.post("/:cartId/add", addToCart)
+.patch("/:cartId/update", updateQuantityInCart)
+.delete("/:cartId/remove", removeCartItem);
 
 export default router;

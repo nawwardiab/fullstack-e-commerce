@@ -1,3 +1,4 @@
+
 ### Register User
 POST http://localhost:5001/users/register
 Content-Type: application/json
@@ -8,25 +9,19 @@ Content-Type: application/json
     "password": "yourSecurePassword123"
 }
 
-### Login User
+
+###
 POST http://localhost:5001/users/login
 Content-Type: application/json
 
 {
-    "email": "john.doe1@example.com",
-    "password": "yourSecurePassword123"
+  "email": "john.doe1@example.com",
+  "password": "yourSecurePassword123"
 }
 
-> {% 
-    if (response.body.token) {
-        client.global.set("auth_token", response.body.token);
-    }
-%}
 
-### Logout User
-POST http://localhost:5001/users/logout
+
+### Logout
+GET http://localhost:5001/users/logout
 Content-Type: application/json
-Cookie: jwtToken={{auth_token}}
-
-
-###
+Cookie: jwtToken={eyJpZCI6IjY3YWI2NDE3MWJlMGI2ZGE2NTdhNTE2MCIsImlhdCI6MTczOTM2NDUyMSwiZXhwIjoxNzM5NDUwOTIxfQ.pqmyfJUp_0BrQczD-VjYUJkus7VjqEWxhdRL7o20LrM}
